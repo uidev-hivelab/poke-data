@@ -2,42 +2,58 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-import { Pokemon } from "./interface";
+import { Pokemons, Pokemon } from "./interface";
 import ListPoke from "./components/ListPoke";
 import Controls from "./components/Controls";
-
-interface Pokemons {
-  name: string;
-  url: string;
-}
+import Popup from "./components/Popup";
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchKeyword, setSearchKeyWord] = useState<string>("");
+  const [isShow, setIsShow] = React.useState<boolean>(false);
+  const [id, setId] = useState<number>(1);
 
   useEffect(() => {
+    //get data
     const getPokemons = async () => {
       const res = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=300&offset=0"
+        "https://pokeapi.co/api/v2/pokemon?limit=30&offset=0"
       );
+
       res.data.results.forEach(async (pokemon: Pokemons) => {
+        setPokemons([]);
         const poke = await axios.get(pokemon.url);
         setPokemons((p) => [...p, poke.data]);
       });
     };
     getPokemons();
-  }, []);
+  }, [searchKeyword]);
 
-  const onSearch = (keyword: string) => {
-    setSearchKeyWord(keyword);
-  };
+  // search by keyword
+  const filteredPokemons = pokemons.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  );
 
   return (
     <div className="wrap">
       <div className="container">
-        <Controls onSearch={onSearch} />
-        <ListPoke pokemons={pokemons} />
+        <Controls
+          searchKeyword={searchKeyword}
+          setSearchKeyWord={setSearchKeyWord}
+        />
+        <ListPoke
+          pokemons={filteredPokemons}
+          setId={setId}
+          isShow={isShow}
+          setIsShow={setIsShow}
+        />
       </div>
+
+      <div
+        className={`dimmed ${isShow ? "is-show" : ""}`}
+        onClick={() => setIsShow(false)}
+      ></div>
+      <Popup isShow={isShow} id={id}></Popup>
     </div>
   );
 };

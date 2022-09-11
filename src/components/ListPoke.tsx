@@ -3,23 +3,37 @@ import { Pokemon } from "../interface";
 
 interface Props {
   pokemons: Pokemon[];
+  setId: React.Dispatch<React.SetStateAction<number>>;
+  isShow: boolean;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ListPoke: React.FC<Props> = (props) => {
-  const { pokemons } = props;
+  const { pokemons, setId, isShow, setIsShow } = props;
+
+  const handleClick = (id: number) => {
+    setId(id);
+    setIsShow(!isShow);
+  };
 
   return (
     <div className="list">
       {pokemons.map((poke) => {
         return (
-          <div className="card" key={poke.id}>
+          <div
+            className="card"
+            key={poke.id}
+            onClick={() => {
+              handleClick(poke.id);
+            }}
+          >
             <div className="thumb">
               <span className="id">#{poke.id}</span>
-              {/* <img
+              <img
                 src={poke.sprites.other["official-artwork"].front_default}
                 alt={poke.name}
                 className="img"
-              /> */}
+              />
             </div>
             <div className="content">
               <div className="types">

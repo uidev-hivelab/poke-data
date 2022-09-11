@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Controls: React.FC = () => {
-  //   const { pokemons } = props;
-  const [searchText, setSearchText] = useState<string>();
+interface Props {
+  searchKeyword: string;
+  setSearchKeyWord: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  const onSearch = (e) => {
-    setSearchText(e.target.value);
-  };
+const Controls: React.FC<Props> = (props) => {
+  const { searchKeyword, setSearchKeyWord } = props;
+
   return (
     <div className="head">
       <h1 className="head-title">POKEMON</h1>
@@ -15,8 +16,10 @@ const Controls: React.FC = () => {
           type="text"
           placeholder="Search Pokemon"
           className="input-search"
-          value={searchText}
-          onChange={onSearch}
+          value={searchKeyword}
+          onChange={(e) => {
+            setSearchKeyWord((e.target as HTMLInputElement).value);
+          }}
         />
       </div>
     </div>
