@@ -37,10 +37,14 @@ const Popup: React.FC<Props> = (props) => {
         <div className="content">
           <div className="group group-thumb">
             <div className="thumb">
-              <img
-                src={pokemons?.sprites.other["official-artwork"].front_default}
-                alt=""
-              />
+              {id > 0 ? (
+                <img
+                  src={
+                    pokemons?.sprites.other["official-artwork"].front_default
+                  }
+                  alt=""
+                />
+              ) : null}
             </div>
           </div>
           <div className="group group-info">

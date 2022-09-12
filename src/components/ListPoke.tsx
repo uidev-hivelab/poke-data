@@ -12,7 +12,11 @@ const ListPoke: React.FC<Props> = (props) => {
   const { pokemons, setId, isShow, setIsShow } = props;
 
   const handleClick = (id: number) => {
-    setId(id);
+    if (isShow) {
+      setId(-1);
+    } else {
+      setId(id);
+    }
     setIsShow(!isShow);
   };
 

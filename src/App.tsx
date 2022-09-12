@@ -12,8 +12,8 @@ const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchKeyword, setSearchKeyWord] = useState<string>("");
   const [isShow, setIsShow] = React.useState<boolean>(false);
-  const [id, setId] = useState<number>(1);
-  const [filter, setFilter] = useState<string>("electric");
+  const [id, setId] = useState<number>(-1);
+  const [filter, setFilter] = useState<string>("all");
 
   // use debounce to delay
   const debouncedSearch = useDebounce(searchKeyword, 500);
@@ -22,12 +22,12 @@ const App: React.FC = () => {
   useEffect(() => {
     //get data
     const getPokemons = async () => {
+      setPokemons([]);
       const res = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=30&offset=0"
+        "https://pokeapi.co/api/v2/pokemon?limit=200&offset=0"
       );
 
       res.data.results.forEach(async (pokemon: Pokemons) => {
-        setPokemons([]);
         const poke = await axios.get(pokemon.url);
         setPokemons((p) => [...p, poke.data]);
       });
@@ -36,16 +36,24 @@ const App: React.FC = () => {
   }, [debouncedSearch]);
 
   // search by keyword
-  const filteredPokemons = pokemons.filter(
-    (pokemon) =>
-      pokemon.name.toLowerCase().includes(debouncedSearch.toLowerCase())
-    // console.log(
-    //   pokemon.types.map((poke) => poke.type.name) !== debouncedFilter
-    // );
+  const searchedPokemons = pokemons.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
+  // filter
+  const eventCheckType = (element: any) =>
+    element.type.name === debouncedFilter;
+  const filteredPokemons =
+    debouncedFilter === "all"
+      ? searchedPokemons
+      : searchedPokemons.filter(
+          (pokemon) =>
+            pokemon.types.some(eventCheckType) &&
+            pokemon.types[0].type.name !== "all"
+        );
+
   return (
-    <div className="wrap">
+    <div className={`wrap ${isShow ? "fixed-layout" : ""}`}>
       <div className="container">
         <Controls
           searchKeyword={searchKeyword}
