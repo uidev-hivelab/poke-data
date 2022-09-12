@@ -90,10 +90,91 @@ img {
   font-size: 36px;
 }
 
+.controls {
+  display: flex;
+}
+
 .controls .input-search {
   width: 200px;
   height: 36px;
   padding: 0 12px;
+  border-color: var(--color-text);
+  font-size: 16px;
+}
+
+.controls .filter {
+  position: relative;
+  width: 200px;
+  margin-left: 16px;
+  z-index: 5;
+}
+
+.controls .filter .options {
+  display: none;
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 180px;
+  overflow: auto;
+  border: 2px solid var(--color-text);
+}
+
+.controls .filter.is-show .options {
+  display: block;
+}
+
+.controls .filter .options::-webkit-scrollbar {
+  width: 8px
+}
+
+.controls .filter .options::-webkit-scrollbar-track {
+  background-color: var(--color-white)
+}
+
+.controls .filter .options::-webkit-scrollbar-thumb {
+  background: var(--color-gray);
+  border-radius: 100px
+}
+
+.controls .filter .options::-webkit-scrollbar-thumb:hover {
+  background: #3f96d9;
+  -webkit-text-size-adjust: none;
+}
+
+.controls .filter .option {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 36px;
+  padding: 2px 36px 0 12px;
+  background-color: var(--color-white);
+  font-size: 16px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.controls .filter .option .ic {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  font-size: 14px;
+  transform: translateY(-50%);
+}
+
+.controls .filter .option .ic-arrow {
+  right: 18px;
+}
+
+.controls .filter.is-show .option .ic-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.controls .filter .option:hover, .controls .filter .option.selected {
+  background-color: #f2f2f2;
+}
+
+.controls .filter .option-selected {
   border-color: var(--color-text);
 }
 
@@ -115,6 +196,7 @@ img {
   border-radius: 12px;
   background-color: var(--color-white);
   box-shadow: 0 1px 6px 1px rgb(0 0 0 / 30%);
+  cursor: pointer;
 }
 
 .list .card .thumb {

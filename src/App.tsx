@@ -6,12 +6,18 @@ import { Pokemons, Pokemon } from "./interface";
 import ListPoke from "./components/ListPoke";
 import Controls from "./components/Controls";
 import Popup from "./components/Popup";
+import useDebounce from "./hooks/useDebounce";
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchKeyword, setSearchKeyWord] = useState<string>("");
   const [isShow, setIsShow] = React.useState<boolean>(false);
   const [id, setId] = useState<number>(1);
+  const [filter, setFilter] = useState<string>("electric");
+
+  // use debounce to delay
+  const debouncedSearch = useDebounce(searchKeyword, 500);
+  const debouncedFilter = useDebounce(filter, 500);
 
   useEffect(() => {
     //get data
@@ -27,11 +33,15 @@ const App: React.FC = () => {
       });
     };
     getPokemons();
-  }, [searchKeyword]);
+  }, [debouncedSearch]);
 
   // search by keyword
-  const filteredPokemons = pokemons.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(searchKeyword.toLowerCase())
+  const filteredPokemons = pokemons.filter(
+    (pokemon) =>
+      pokemon.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+    // console.log(
+    //   pokemon.types.map((poke) => poke.type.name) !== debouncedFilter
+    // );
   );
 
   return (
@@ -40,6 +50,8 @@ const App: React.FC = () => {
         <Controls
           searchKeyword={searchKeyword}
           setSearchKeyWord={setSearchKeyWord}
+          filter={filter}
+          setFilter={setFilter}
         />
         <ListPoke
           pokemons={filteredPokemons}
