@@ -9,11 +9,18 @@ import Popup from "./components/Popup";
 import useDebounce from "./hooks/useDebounce";
 
 const App: React.FC = () => {
+  const [scroll, setScroll] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [searchKeyword, setSearchKeyWord] = useState<string>("");
   const [isShow, setIsShow] = React.useState<boolean>(false);
   const [id, setId] = useState<number>(-1);
   const [filter, setFilter] = useState<string>("all");
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY > 50);
+    });
+  }, []);
 
   // use debounce to delay
   const debouncedSearch = useDebounce(searchKeyword, 500);
@@ -52,23 +59,38 @@ const App: React.FC = () => {
             pokemon.types[0].type.name !== "all"
         );
 
-  return (
-    <div className={`wrap ${isShow ? "fixed-layout" : ""}`}>
-      <div className="container">
-        <Controls
-          searchKeyword={searchKeyword}
-          setSearchKeyWord={setSearchKeyWord}
-          filter={filter}
-          setFilter={setFilter}
-        />
-        <ListPoke
-          pokemons={filteredPokemons}
-          setId={setId}
-          isShow={isShow}
-          setIsShow={setIsShow}
-        />
-      </div>
+  // overflow body
+  if (isShow) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "initial";
+  }
 
+  return (
+    <div className={`wrap`}>
+      <Controls
+        searchKeyword={searchKeyword}
+        setSearchKeyWord={setSearchKeyWord}
+        filter={filter}
+        setFilter={setFilter}
+        scroll={scroll}
+      />
+      <ListPoke
+        pokemons={filteredPokemons}
+        setId={setId}
+        isShow={isShow}
+        setIsShow={setIsShow}
+      />
+
+      <button
+        type="button"
+        className={`btn btn-top ${scroll ? "is-show" : ""}`}
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+          })
+        }
+      ></button>
       <div
         className={`dimmed ${isShow ? "is-show" : ""}`}
         onClick={() => setIsShow(false)}

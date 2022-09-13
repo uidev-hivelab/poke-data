@@ -23,6 +23,7 @@ const types = [
 ];
 
 interface Props {
+  scroll: boolean;
   searchKeyword: string;
   setSearchKeyWord: React.Dispatch<React.SetStateAction<string>>;
   filter: string;
@@ -30,7 +31,7 @@ interface Props {
 }
 
 const Controls: React.FC<Props> = (props) => {
-  const { searchKeyword, setSearchKeyWord, filter, setFilter } = props;
+  const { scroll, searchKeyword, setSearchKeyWord, filter, setFilter } = props;
   const [isShow, setIsShow] = React.useState<boolean>(false);
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -55,45 +56,50 @@ const Controls: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="head">
-      <h1 className="head-title">POKEMON</h1>
-      <div className="controls">
-        <input
-          type="text"
-          placeholder="Search Pokemon"
-          className="input-search"
-          value={searchKeyword}
-          onChange={(e) => {
-            setSearchKeyWord((e.target as HTMLInputElement).value);
-          }}
-        />
-        <div className={`filter ${isShow ? "is-show" : ""}`} ref={boxRef}>
-          <button
-            type="button"
-            className="option option-selected"
-            onClick={() => setIsShow(!isShow)}
-          >
-            {filter}
-            <FontAwesomeIcon icon={faChevronDown} className="ic ic-arrow" />
-          </button>
-          <ul className="options">
-            {types.map((item) => {
-              return (
-                <li
-                  className={`option ${item === filter ? "selected" : ""}`}
-                  key={item}
-                  onClick={() => {
-                    handleSelect(item);
-                  }}
-                >
-                  <span>{item}</span>
-                  {item === filter ? (
-                    <FontAwesomeIcon icon={faCheck} className="ic ic-checked" />
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
+    <div className={`head ${scroll ? "header-fixed" : ""}`}>
+      <div className="inner">
+        <h1 className="head-title">POKEMON</h1>
+        <div className="controls">
+          <input
+            type="text"
+            placeholder="Search Pokemon"
+            className="input-search"
+            value={searchKeyword}
+            onChange={(e) => {
+              setSearchKeyWord((e.target as HTMLInputElement).value);
+            }}
+          />
+          <div className={`filter ${isShow ? "is-show" : ""}`} ref={boxRef}>
+            <button
+              type="button"
+              className="option option-selected"
+              onClick={() => setIsShow(!isShow)}
+            >
+              {filter}
+              <FontAwesomeIcon icon={faChevronDown} className="ic ic-arrow" />
+            </button>
+            <ul className="options">
+              {types.map((item) => {
+                return (
+                  <li
+                    className={`option ${item === filter ? "selected" : ""}`}
+                    key={item}
+                    onClick={() => {
+                      handleSelect(item);
+                    }}
+                  >
+                    <span>{item}</span>
+                    {item === filter ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className="ic ic-checked"
+                      />
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

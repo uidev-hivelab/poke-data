@@ -22,38 +22,40 @@ const ListPoke: React.FC<Props> = (props) => {
 
   return (
     <div className="list">
-      {pokemons.map((poke) => {
-        return (
-          <div
-            className="card"
-            key={poke.id}
-            onClick={() => {
-              handleClick(poke.id);
-            }}
-          >
-            <div className="thumb">
-              <span className="id">#{poke.id}</span>
-              <img
-                src={poke.sprites.other["official-artwork"].front_default}
-                alt={poke.name}
-                className="img"
-              />
-            </div>
-            <div className="content">
-              <div className="types">
-                {poke.types.map((poke, index) => {
-                  return (
-                    <span className={`type ` + poke.type.name} key={index}>
-                      {poke.type.name}
-                    </span>
-                  );
-                })}
+      <div className="inner">
+        {pokemons.map((poke) => {
+          return (
+            <div
+              className="card"
+              key={poke.id}
+              onClick={() => {
+                handleClick(poke.id);
+              }}
+            >
+              <div className="thumb">
+                <span className="id">#{poke.id}</span>
+                <img
+                  src={poke.sprites.other["official-artwork"].front_default}
+                  alt={poke.name}
+                  className="img"
+                />
               </div>
-              <strong className="name">{poke.name}</strong>
+              <div className="content">
+                <div className="types">
+                  {poke.types.map((poke, index) => {
+                    return (
+                      <span className={`type ` + poke.type.name} key={index}>
+                        {poke.type.name}
+                      </span>
+                    );
+                  })}
+                </div>
+                <strong className="name">{poke.name}</strong>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

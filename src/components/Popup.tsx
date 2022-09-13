@@ -16,7 +16,7 @@ const Popup: React.FC<Props> = (props) => {
   const [pokemons, setPokemons] = useState<Pokemon>();
 
   useEffect(() => {
-    //get data
+    //get data by id
     const getPokemon = async () => {
       const res: Pokemon = (
         await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -31,7 +31,7 @@ const Popup: React.FC<Props> = (props) => {
 
   return (
     <div className={`layer ${isShow ? "is-show" : ""}`}>
-      <div className="inner">
+      <div className="layer-inner">
         <div className="header">
           <h2 className="name">
             #{pokemons?.id} - {pokemons?.name}
