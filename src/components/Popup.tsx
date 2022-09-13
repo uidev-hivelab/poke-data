@@ -97,6 +97,43 @@ const Popup: React.FC<Props> = (props) => {
               <div className="types">Updating...</div>
             </div>
           </div>
+          <div className="group group-stats">
+            <h3 className="title">Stats</h3>
+            <ul className="stats">
+              {pokemons?.stats.map((poke) => {
+                return (
+                  <li className="item">
+                    <ul className="gauge">
+                      <li
+                        className="meter"
+                        style={{
+                          top: (150 - poke.base_stat) * 0.5 - 1.111 + "%",
+                        }}
+                      ></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                    </ul>
+                    <span className="gauge-text">
+                      {poke.stat.name.split("-").join(" ")}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

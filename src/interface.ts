@@ -21,4 +21,12 @@ export interface Pokemon {
   ];
   height: number;
   weight: number;
+  stats: [
+    {
+      base_stat: number;
+      stat: {
+        name: string;
+      };
+    }
+  ];
 }
