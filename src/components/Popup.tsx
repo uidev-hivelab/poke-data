@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { Pokemon } from "../interface";
 
 interface Props {
   isShow: boolean;
   id: number;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Popup: React.FC<Props> = (props) => {
-  const { isShow, id } = props;
+  const { isShow, setIsShow, id } = props;
   const [pokemons, setPokemons] = useState<Pokemon>();
 
   useEffect(() => {
     //get data
-    if (id) {
-    }
     const getPokemon = async () => {
       const res: Pokemon = (
         await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -23,7 +24,9 @@ const Popup: React.FC<Props> = (props) => {
       setPokemons(res);
     };
 
-    getPokemon();
+    if (id > 0) {
+      getPokemon();
+    }
   }, [id]);
 
   return (
@@ -33,6 +36,13 @@ const Popup: React.FC<Props> = (props) => {
           <h2 className="name">
             #{pokemons?.id} - {pokemons?.name}
           </h2>
+          <button
+            type="button"
+            className="btn btn-close"
+            onClick={() => setIsShow(false)}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
         </div>
         <div className="content">
           <div className="group group-thumb">

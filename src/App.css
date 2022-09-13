@@ -83,6 +83,14 @@ img {
   overflow: hidden;
 }
 
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
 /* Head */
 .container .head {
   display: flex;
@@ -357,6 +365,10 @@ img {
   padding: 30px 24px;
 }
 
+.layer .header {
+  position: relative;
+}
+
 .layer .header .name {
   font-size: 30px;
   text-transform: capitalize;
@@ -380,8 +392,6 @@ img {
   padding: 36px;
   background-color: #F2F2F2;
 }
-
-.group.group-thumb .thumb {}
 
 .group .info {
   display: flex;
@@ -428,11 +438,22 @@ img {
   border-radius: 4px;
 }
 
+.btn-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  font-size: 24px;
+}
+
 .dimmed {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);

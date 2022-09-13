@@ -73,7 +73,7 @@ const App: React.FC = () => {
         className={`dimmed ${isShow ? "is-show" : ""}`}
         onClick={() => setIsShow(false)}
       ></div>
-      <Popup isShow={isShow} id={id}></Popup>
+      <Popup isShow={isShow} setIsShow={setIsShow} id={id}></Popup>
     </div>
   );
 };
