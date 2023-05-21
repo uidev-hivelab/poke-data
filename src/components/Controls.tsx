@@ -20,6 +20,7 @@ const types = [
   "steel",
   "ghost",
   "dark",
+  "dragon",
 ];
 
 interface Props {

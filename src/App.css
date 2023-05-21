@@ -278,6 +278,7 @@ img {
 
 .type {
   color: var(--color-white);
+  text-transform: capitalize;
 }
 
 .type.normal {
@@ -354,6 +355,10 @@ img {
   background-color: #707070;
 }
 
+.type.dragon {
+  background: linear-gradient(180deg, #4592c4 50%, #fd7d24 50%);
+}
+
 .list .content .name {
   font-size: 18px;
   text-transform: capitalize;
@@ -361,7 +366,7 @@ img {
 
 /* Layer */
 .layer {
-  display: none;
+  visibility: hidden;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -369,11 +374,14 @@ img {
   width: 800px;
   border-radius: 16px;
   background-color: var(--color-white);
+  opacity: 0;
   transform: translate(-50%, -50%);
+  transition: 0.3s;
 }
 
 .layer.is-show {
-  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 .layer .layer-inner {
@@ -406,7 +414,11 @@ img {
 .group.group-thumb {
   min-height: 273px;
   padding: 36px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
+}
+
+.group.group-overview {
+  background-color: #30a7d7;
 }
 
 .group .info {
@@ -415,13 +427,16 @@ img {
   gap: 16px;
   padding: 24px;
   border-radius: 8px;
-  background-color: #30a7d7;
   color: var(--color-white);
 }
 
 .group .info .item {
   flex: 0 0 calc(50% - 8px);
   font-size: 14px;
+}
+
+.group .info .item-about {
+  flex-basis: 100%;
 }
 
 .group .info .item .value {
@@ -450,10 +465,6 @@ img {
   border-radius: 4px;
 }
 
-.layer .content .group-stats {
-  flex-basis: 100%;
-}
-
 .group-stats {
   padding: 24px 24px 60px;
   background-color: #F2F2F2;
@@ -467,7 +478,6 @@ img {
 .group-stats .stats {
   display: flex;
   gap: 8px;
-  width: 400px;
   margin: 0 auto;
 }
 

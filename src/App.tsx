@@ -31,13 +31,15 @@ const App: React.FC = () => {
     const getPokemons = async () => {
       setPokemons([]);
       const res = await axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=200&offset=0"
+        "https://pokeapi.co/api/v2/pokemon?limit=230"
       );
 
-      res.data.results.forEach(async (pokemon: Pokemons) => {
-        const poke = await axios.get(pokemon.url);
-        setPokemons((p) => [...p, poke.data]);
-      });
+      setTimeout(() => {
+        res.data.results.forEach(async (pokemon: Pokemons) => {
+          const poke = await axios.get(pokemon.url);
+          setPokemons((p) => [...p, poke.data]);
+        });
+      }, 1000);
     };
     getPokemons();
   }, [debouncedSearch]);
